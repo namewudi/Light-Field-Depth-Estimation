@@ -1,12 +1,14 @@
-function output = groundTruth( filename,data_type )
-%extracting gt disparity map
+function [disp_rgb,disp_gt] = evaluate( filename,data_type,disp,thres )
+%computing error map
+cutoff=15;
 switch data_type
     case 1
         path=['data\new_benchmark\',filename,'\LF.mat'];
         load(path);
         LF_struct = LF;
-        LF = LF_struct.LF;
-        output=LF_struct.disp_lowres;
+        disp_gt=LF_struct.disp_lowres;
+        dmin = LF_struct.parameters.meta.disp_min;
+        dmax = LF_struct.parameters.meta.disp_max;
     case 2
         path=['data\old_benchmark\',filename,'\lf.h5'];
         ind = hdf5info(path);
@@ -30,10 +32,17 @@ switch data_type
         [S,~,~,~,~]=size(LF);
         UV_center = round(S/2);
         depth = groundtruth(:,:,UV_center,UV_center)';
-        output = (double(dH)*focalLength) ./ depth - double(shift);
+        disp_gt = (double(dH)*focalLength) ./ depth - double(shift);
+        dmin=min(min(disp_gt(cutoff+1:end-cutoff, cutoff+1:end-cutoff,:)));
 end
 
-
+[H,W]=size(disp);
+disp_rgb = zeros(H,W,3);
+disp_g = (disp-dmin)/(dmax-dmin);
+disp_g(abs(disp - disp_gt) > thres)=1 ;
+disp_rgb(:,:,1) = disp_g; disp_g(abs(disp - disp_gt) > thres)=0;
+disp_rgb(:,:,2:3) = disp_g(:,:,ones(2,1));
+disp_rgb=disp_rgb(cutoff+1:end-cutoff, cutoff+1:end-cutoff,:);
 
 end
 

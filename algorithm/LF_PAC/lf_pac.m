@@ -17,11 +17,10 @@ central_img=squeeze(LF(5,5,:,:,:));
 
 IM_Refoc_alpha   = zeros(yRes,xRes,3);
 E1=zeros(yRes,xRes,depth_resolution);
-LF_Remap_alpha_mean = zeros(LF_y_size,LF_x_size,3);
 LF_Remap_alpha= zeros(LF_y_size,LF_x_size,3);
 
-Remap_alpha_mean=central_img;
-repeat(double(xRes),double(yRes),double(UV_diameter),double(UV_radius),Remap_alpha_mean,LF_Remap_alpha_mean);
+LF_Remap_alpha_mean=repelem(central_img,vRes,uRes);
+
 
 Mask=zeros(S,T,5);
 for i=1:S

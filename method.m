@@ -1,4 +1,4 @@
-function [ output ] = method( filename,data_type,algo_type, depth_resolution)
+function [ output,output_path ] = method( filename,data_type,algo_type, depth_resolution)
 %METHOD 此处显示有关此函数的摘要
 %   此处显示详细说明
 switch data_type
@@ -43,38 +43,47 @@ switch algo_type
         addpath(genpath('algorithm/CAE'));
         output=costVolume(LF,dmin,dmax,depth_resolution);
         rmpath(genpath('algorithm/CAE'));
+        output_path = 'output/CAE/';
     case 2
         addpath(genpath('algorithm/SPO'));
         output=costVolume(LF,dmin,dmax,depth_resolution);
         rmpath(genpath('algorithm/SPO'));
+        output_path = 'output/SPO/';
     case 3
         addpath(genpath('algorithm/IGF'));
         output=costVolume(LF,dmin,dmax,depth_resolution);
         rmpath(genpath('algorithm/IGF'));
+        output_path = 'output/IGF/';
     case 4
         addpath(genpath('algorithm/LF_PAC'));
         output=costVolume(LF,dmin,dmax,depth_resolution);
         rmpath(genpath('algorithm/LF_PAC'));
+        output_path = 'output/LF_PAC/';
     case 5
         addpath(genpath('algorithm/MBM'));
         output=costVolume(LF,dmin,dmax,depth_resolution);
         rmpath(genpath('algorithm/MBM'));
+        output_path = 'output/MBM/';
     case 6
         addpath(genpath('algorithm/POBR'));
         output=costVolume(LF,dmin,dmax,depth_resolution);
         rmpath(genpath('algorithm/POBR'));
+        output_path = 'output/POBR/';
     case 7
         addpath(genpath('algorithm/LF'));
         output=costVolume(LF,dmin,dmax,depth_resolution);
         rmpath(genpath('algorithm/LF'));
+        output_path = 'output/LF/';
     case 8
         addpath(genpath('algorithm/LF_DC'));
         output=costVolume(LF,dmin,dmax,depth_resolution);
         rmpath(genpath('algorithm/LF_DC'));
+        output_path = 'output/LF_DC/';
     case 9
         addpath(genpath('algorithm/LF_OCC'));
         output=costVolume(LF,dmin,dmax,depth_resolution);
         rmpath(genpath('algorithm/LF_OCC')); 
+        output_path = 'output/LF_OCC/';
 end
 
 end
